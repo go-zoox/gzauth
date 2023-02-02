@@ -2,6 +2,7 @@ package doreamon
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 
@@ -46,7 +47,19 @@ func Serve(cfg *Config) error {
 
 	app.Use(func(ctx *zoox.Context) {
 		if ctx.Method != "GET" {
-			// @TODO
+			if ctx.Session().Get("oauth2.user") == "" {
+				if ctx.AcceptJSON() {
+					ctx.JSON(http.StatusUnauthorized, zoox.H{
+						"code":    401000,
+						"message": "Unauthorized",
+					})
+					return
+				}
+
+				ctx.String(http.StatusUnauthorized, "Unauthorized")
+				return
+			}
+
 			ctx.Next()
 			return
 		}
