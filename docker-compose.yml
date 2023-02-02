@@ -3,8 +3,14 @@ version: '3.7'
 services:
   app:
     # image: whatwewant/gzauth:v0.0.6
+    platform: linux/amd64
     build:
       context: .
     ports:
-      - 0.0.0.0:6666:6666
-    
+      - 0.0.0.0:8080:8080
+    environment:
+      AUTH_TYPE: basic
+      UPSTREAM: https://httpbin.org
+      USERNAME: go-zoox
+      PASSWORD: gogogo
+
