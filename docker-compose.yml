@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  app:
+    # image: whatwewant/gzauth:v0.0.6
+    build:
+      context: .
+    ports:
+      - 0.0.0.0:6666:6666
+    
