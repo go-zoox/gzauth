@@ -13,6 +13,7 @@ func main() {
 	})
 
 	commands.RegistryBasic(app)
+	commands.RegistryBear(app)
 
 	app.Run()
 }
