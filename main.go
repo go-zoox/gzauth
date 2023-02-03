@@ -12,9 +12,15 @@ func main() {
 		Version: Version,
 	})
 
+	// basic
 	commands.RegistryBasic(app)
+	// bear
 	commands.RegistryBear(app)
+	// oauth2
+	//	=> doreamon
 	commands.RegistryDoreamon(app)
+	//	=> github
+	commands.RegistryGitHub(app)
 
 	app.Run()
 }
