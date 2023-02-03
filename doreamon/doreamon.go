@@ -65,7 +65,7 @@ func Serve(cfg *Config) error {
 		}
 
 		// login
-		if ctx.Path == "/login" {
+		if ctx.Path == "/login" || ctx.Path == "/login/doreamon" {
 			originState := random.String(8)
 			originFrom := ctx.Query().Get("from").String()
 			client.Authorize(originState, func(loginUrl string) {
@@ -80,7 +80,7 @@ func Serve(cfg *Config) error {
 		}
 
 		// callback
-		if ctx.Path == "/login/callback" {
+		if ctx.Path == "/login/callback" || ctx.Path == "/login/doreamon/callback" {
 			code := ctx.Query().Get("code").String()
 			state := ctx.Query().Get("state").String()
 
