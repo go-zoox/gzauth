@@ -21,6 +21,8 @@ func main() {
 	commands.RegistryDoreamon(app)
 	//	=> github
 	commands.RegistryGitHub(app)
+	//	=> feishu
+	commands.RegistryFeishu(app)
 
 	app.Run()
 }
