@@ -18,7 +18,9 @@ import (
 // Config is the basic config
 type Config struct {
 	Port int64
-	// mode: static username/password
+
+	// SecretKey uses for session and backend jwt token
+	SecretKey string
 
 	// ClientID is the doreamon client id
 	ClientID string
@@ -34,6 +36,10 @@ type Config struct {
 
 func Serve(cfg *Config) error {
 	app := defaults.Application()
+
+	if cfg.SecretKey != "" {
+		app.SecretKey = cfg.SecretKey
+	}
 
 	client, err := doreamon.New(&doreamon.DoreamonConfig{
 		ClientID:     cfg.ClientID,
@@ -150,13 +156,25 @@ func Serve(cfg *Config) error {
 			return
 		}
 
-		// userSessionKey := ctx.Session().Get("oauth2.user")
-		// user := oauth2.User{}
-		// if err := ctx.Cache().Get(userSessionKey, &user); err != nil {
-		// 	time.Sleep(1 * time.Second)
-		// 	ctx.Redirect(fmt.Sprintf("/login?reason=%s", "user cache not found"))
-		// 	return
-		// }
+		userSessionKey := ctx.Session().Get("oauth2.user")
+		user := oauth2.User{}
+		if err := ctx.Cache().Get(userSessionKey, &user); err != nil {
+			time.Sleep(1 * time.Second)
+			ctx.Redirect(fmt.Sprintf("/login?reason=%s", "user cache not found"))
+			return
+		}
+
+		token, err := ctx.Jwt().Sign(map[string]interface{}{
+			"user_id":       user.ID,
+			"user_nickname": user.Nickname,
+			"user_avatar":   user.Avatar,
+			"user_email":    user.Email,
+		})
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+			return
+		}
+		ctx.Request.Header.Set("X-GZAuth-Token", token)
 
 		ctx.Next()
 	})
