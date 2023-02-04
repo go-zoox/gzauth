@@ -26,6 +26,11 @@ func RegistryFeishu(app *cli.MultipleProgram) {
 				Required: true,
 			},
 			&cli.StringFlag{
+				Name:    "secret-key",
+				Usage:   "secret-key used for session and jwt token",
+				EnvVars: []string{"SECRET_KEY"},
+			},
+			&cli.StringFlag{
 				Name:    "client-id",
 				Usage:   "Feishu Client ID",
 				EnvVars: []string{"CLIENT_ID"},
@@ -53,6 +58,7 @@ func RegistryFeishu(app *cli.MultipleProgram) {
 			return feishu.Serve(&feishu.Config{
 				Port:         ctx.Int64("port"),
 				Upstream:     ctx.String("upstream"),
+				SecretKey:    ctx.String("secret-key"),
 				ClientID:     ClientID,
 				ClientSecret: ClientSecret,
 				RedirectURI:  RedirectURI,
