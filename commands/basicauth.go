@@ -4,12 +4,12 @@ import (
 	"fmt"
 
 	"github.com/go-zoox/cli"
-	"github.com/go-zoox/gzauth/basic"
+	"github.com/go-zoox/gzauth/basicauth"
 )
 
 func RegistryBasic(app *cli.MultipleProgram) {
-	app.Register("basic", &cli.Command{
-		Name:  "basic",
+	app.Register("basicauth", &cli.Command{
+		Name:  "basicauth",
 		Usage: "auth with basic auth",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
@@ -56,7 +56,7 @@ func RegistryBasic(app *cli.MultipleProgram) {
 				}
 			}
 
-			return basic.Serve(&basic.Config{
+			return basicauth.Serve(&basicauth.Config{
 				Port:        ctx.Int64("port"),
 				Username:    username,
 				Password:    password,

@@ -1,4 +1,4 @@
-package beartoken
+package bearertoken
 
 import (
 	"github.com/go-zoox/core-utils/fmt"

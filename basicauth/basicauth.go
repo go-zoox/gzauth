@@ -1,4 +1,4 @@
-package basic
+package basicauth
 
 import (
 	"github.com/go-zoox/core-utils/fmt"

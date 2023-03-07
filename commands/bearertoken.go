@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/go-zoox/cli"
-	"github.com/go-zoox/gzauth/beartoken"
+	"github.com/go-zoox/gzauth/bearertoken"
 )
 
 func RegistryBear(app *cli.MultipleProgram) {
-	app.Register("bear", &cli.Command{
-		Name:  "bear",
-		Usage: "auth with bear token auth",
+	app.Register("bearertoken", &cli.Command{
+		Name:  "bearertoken",
+		Usage: "auth with bearer token auth",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:    "port",
@@ -44,7 +44,7 @@ func RegistryBear(app *cli.MultipleProgram) {
 				return fmt.Errorf("token or auth-service is required")
 			}
 
-			return beartoken.Serve(&beartoken.Config{
+			return bearertoken.Serve(&bearertoken.Config{
 				Port:        ctx.Int64("port"),
 				Token:       token,
 				AuthService: authService,
