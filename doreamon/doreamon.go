@@ -145,7 +145,7 @@ func Serve(cfg *Config) error {
 				return
 			}
 
-			ctx.JSON(http.StatusOK, user)
+			ctx.Success(user)
 			return
 		}
 
