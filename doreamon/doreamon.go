@@ -38,7 +38,7 @@ func Serve(cfg *Config) error {
 	app := defaults.Application()
 
 	if cfg.SecretKey != "" {
-		app.SecretKey = cfg.SecretKey
+		app.Config.SecretKey = cfg.SecretKey
 	}
 
 	client, err := doreamon.New(&doreamon.DoreamonConfig{
@@ -105,7 +105,7 @@ func Serve(cfg *Config) error {
 			client.Callback(code, state, func(user *oauth2.User, token *oauth2.Token, err error) {
 				userSessionKey := fmt.Sprintf("user:%s", user.ID)
 
-				ctx.Cache().Set(userSessionKey, user, ctx.App.SessionMaxAge)
+				ctx.Cache().Set(userSessionKey, user, ctx.App.Config.Session.MaxAge)
 
 				ctx.Session().Set("oauth2.user", userSessionKey)
 				// ctx.Session().Set("oauth2.token", token.AccessToken)
